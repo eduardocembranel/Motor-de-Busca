@@ -59,6 +59,18 @@ bool Util::isBlank (const std::string &str)
    return true;
 }
 
+void Util::removePontuacao (std::string &str)
+{
+   for (size_t i = 0; i < str.size(); ++i)
+   {
+      if (str[i] == '"' || str[i] == '(' || str[i] == ')')
+      {
+         str.erase(i, 1);
+         --i;
+      }
+   }
+}
+
 /* brief: limpa a tela do console
 * pre: nenhuma
 * pos: tela limpada do console

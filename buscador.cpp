@@ -107,7 +107,8 @@ void Buscador::consulta ()
 
    std::vector<int> intersec = Util::intersecao(arquivos);
 
-   std::cout << "\nqnt: " << intersec.size() << "\ndocumentos:\n";
+   std::cout << "\nqnt: " << intersec.size() << "\n";
+   if (intersec.size() > 0) std::cout << "\ndocumentos:\n";
 
    for (auto &it : intersec)
       std::cout << caminhoArquivos[it] << "\n";
@@ -174,6 +175,7 @@ void Buscador::carregaDados ()
       {
          std::string linha;
          std::getline(fBuffer, linha);
+         Util::removePontuacao(linha);
    
          std::vector<std::string> palavras = Util::splitString(linha, delimitadores);
          for (auto it : palavras)
