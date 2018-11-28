@@ -9,6 +9,7 @@ int main (int argc, char **argv)
          throw "Quantidade invalida de argumentos!";
          
       Buscador *motor = new Buscador(argv[1], argv[2]);
+      motor->run();
       
       delete motor;
    }
