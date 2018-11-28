@@ -1,4 +1,4 @@
-arvores.txt
-conto.txt
-divisao.txt
-ipe.txt
+Data/arvores.txt
+Data/conto.txt
+Data/divisao.txt
+Data/ipe.txt
