@@ -1,9 +1,6 @@
 #include "listNode.hpp"
 
-ListNode::ListNode()
-{
-
-}
+ListNode::ListNode() {}
 
 ListNode::ListNode(int arq, int qnt, int prox)
 {
@@ -12,12 +9,14 @@ ListNode::ListNode(int arq, int qnt, int prox)
    this->prox = prox;
 }
 
-void ListNode::toString ()
-{
-   std::cout << this->arquivo + 1 << "," << this->quantidade << "  ";
-}
-
 int ListNode::getProx () const
 {
    return this->prox;
+}
+
+std::ostream& operator<< (std::ostream &out, const ListNode &node)
+{
+   out << node.arquivo + 1 << "," << node.quantidade << "  ";
+
+   return out;
 }

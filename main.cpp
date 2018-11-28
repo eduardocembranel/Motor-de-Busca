@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "Buscador.hpp"
 
 int main (int argc, char **argv)

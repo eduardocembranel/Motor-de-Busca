@@ -1,9 +1,5 @@
 #include "ArquivoDados.hpp"
 
-//n precisa
-#include <iostream>
-
-
 ArquivoDados::ArquivoDados (const std::string &fileName) : Arquivo(fileName)
 {
    this->posTopo = 0;
@@ -77,18 +73,6 @@ std::vector<int> ArquivoDados::getTodosArquivos (int pos)
       pos = node.getProx();
    }
    return arquivos;
-}
-
-void ArquivoDados::teste ()
-{
-   for (int i = 0; i < this->posTopo; ++i)
-   {
-      ListNode elem = getData(i);
-      std::cout << "elem " << i << "\n";
-      std::cout << elem.arquivo << "\n"
-                << elem.quantidade << "\n"
-                << elem.prox << "\n";
-   }
 }
 
 std::string ArquivoDados::getName () const

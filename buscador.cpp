@@ -78,7 +78,7 @@ void Buscador::imprimeIndice ()
          for (pos = elems[i].second; pos != -1; pos = temp.getProx())
          {
             temp = arqDados->getData(pos);
-            temp.toString();
+            std::cout << temp;
          }
          std::cout << "\n";
       }
@@ -115,7 +115,7 @@ void Buscador::consulta ()
    Util::pressRetornar();
 }
 
-void Buscador::mostraMenu ()
+void Buscador::mostraMenu () const
 {
    Util::clear();
    std::cout << "[Motor de Busca]\n\n"
@@ -204,5 +204,6 @@ bool Buscador::ehStopWord (const std::string &str) const
 
 Buscador::~Buscador ()
 {
-   
+   delete arqDados;
+   delete arqIndice;
 }

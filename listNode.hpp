@@ -15,9 +15,9 @@ class ListNode
 
    public:
       ListNode();
-      ListNode(int arq, int qnt=1, int prox=-1);
-      void toString ();
+      ListNode(int arq, int=1, int=-1);
       int getProx () const;
+      friend std::ostream& operator<< (std::ostream&, const ListNode&);
 };
 
 #endif // !LISTNODE_HPP

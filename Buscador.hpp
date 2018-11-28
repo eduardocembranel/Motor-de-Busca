@@ -20,7 +20,7 @@ class Buscador
       void carregaStopWords(const std::string &);
       void carregaDados();
       bool ehStopWord (const std::string &) const;
-      void mostraMenu ();
+      void mostraMenu () const;
    
       void imprimeIndice ();
       void imprimeStopWords ();

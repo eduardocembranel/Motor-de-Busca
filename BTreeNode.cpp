@@ -1,9 +1,6 @@
-#include "BTreeNode.hpp"
-
 #include <cstring>
 
-//n precisa
-#include <iostream>
+#include "BTreeNode.hpp"
 
 BTreeNode::BTreeNode (const char *chave, int indice)
 {
