@@ -5,15 +5,15 @@
 
 ArquivoIndice::ArquivoIndice (const std::string &fileName) : Arquivo(fileName)
 {
-   this->posTopo = 0;
-   this->posRaiz = -1;
+   posTopo = 0;
+   posRaiz = -1;
 }
 
 //chave, indice(posicao do arquivo de dados), pos= posFinal
 void ArquivoIndice::insere (const char *chave, int indice, int &pos)
 {
    //arvore vazia
-   if (this->posRaiz == -1)
+   if (posRaiz == -1)
    {
       BTreeNode raiz(chave, indice);
       pos = indice;
@@ -21,18 +21,18 @@ void ArquivoIndice::insere (const char *chave, int indice, int &pos)
    }
 
    //insere e se deu overflow na raiz
-   else if (insereAux(this->posRaiz, chave, indice, pos) == true)
+   else if (insereAux(posRaiz, chave, indice, pos) == true)
    {
       int medIndice;
       char medChave[50];
-      BTreeNode raiz = BTreeNode::getNode(this->in, this->posRaiz);
+      BTreeNode raiz = BTreeNode::getNode(in, posRaiz);
       BTreeNode novo = BTreeNode::split(raiz, medChave, &medIndice);
 
-      raiz.setNode(this->out, this->posRaiz); //recoloca a raiz antiga
+      raiz.setNode(out, posRaiz); //recoloca a raiz antiga
       int posNovo = insereNaoRaiz(novo); //coloca o novo No (direito dosplit)
    
       BTreeNode novaRaiz(medChave, medIndice);
-      novaRaiz.filhos[0] = this->posRaiz;
+      novaRaiz.filhos[0] = posRaiz;
       novaRaiz.filhos[1] = posNovo;
       insereRaiz(novaRaiz);
    }
@@ -40,7 +40,7 @@ void ArquivoIndice::insere (const char *chave, int indice, int &pos)
 
 bool ArquivoIndice::insereAux (int pos, const char *chave, int indice, int &posDados)
 {
-   BTreeNode atual = BTreeNode::getNode(this->in, pos);
+   BTreeNode atual = BTreeNode::getNode(in, pos);
 
    int i; //posicao do vetor-chave ou vetor-filhos que a chave deve pertencer
    for (i = 0; i < atual.numChaves && strcmp(chave, atual.chaves[i]) > 0; ++i)
@@ -64,7 +64,7 @@ bool ArquivoIndice::insereAux (int pos, const char *chave, int indice, int &posD
       strcpy(atual.chaves[i], chave);
       atual.indices[i] = indice;
       ++atual.numChaves;
-      atual.setNode(this->out, pos);
+      atual.setNode(out, pos);
       posDados = indice;
    }
 
@@ -74,11 +74,11 @@ bool ArquivoIndice::insereAux (int pos, const char *chave, int indice, int &posD
       int medIndice;
       char medChave[50];
       int posOverflow = i; //index do filho q sofreu overflow
-      BTreeNode cheio = BTreeNode::getNode(this->in, atual.filhos[i]);
+      BTreeNode cheio = BTreeNode::getNode(in, atual.filhos[i]);
       BTreeNode novo  = BTreeNode::split(cheio, medChave, &medIndice);
 
       //insere de volta o antigo No cheio
-      cheio.setNode(this->out, atual.filhos[i]);
+      cheio.setNode(out, atual.filhos[i]);
 
       //inserir o mediano na posicao correta
       for (i = 0; i < atual.numChaves && strcmp(medChave, atual.chaves[i]) > 0; ++i)
@@ -99,31 +99,31 @@ bool ArquivoIndice::insereAux (int pos, const char *chave, int indice, int &posD
 
       int posNovo = insereNaoRaiz(novo);
       atual.filhos[j] = posNovo;
-      atual.setNode(this->out, pos);
+      atual.setNode(out, pos);
    }
    return atual.overflow();
 }
 
 void ArquivoIndice::insereRaiz (BTreeNode node)
 {
-   node.setNode(this->out, this->posTopo);
-   this->posRaiz = this->posTopo;
-   ++this->posTopo;
+   node.setNode(out, posTopo);
+   posRaiz = posTopo;
+   ++posTopo;
 }
 
 int ArquivoIndice::insereNaoRaiz (BTreeNode node)
 {
-   node.setNode(this->out, this->posTopo);
-   ++this->posTopo;
-   return this->posTopo - 1;
+   node.setNode(out, posTopo);
+   ++posTopo;
+   return posTopo - 1;
 }
 
 std::vector<std::pair<std::string, int>> ArquivoIndice::getChavesEIndices ()
 {
    std::vector<std::pair<std::string, int>> elems;
 
-   if (this->posRaiz != -1)
-      getChavesEIndicesAux(this->posRaiz, elems);
+   if (posRaiz != -1)
+      getChavesEIndicesAux(posRaiz, elems);
 
    return elems;
 }
@@ -131,14 +131,14 @@ std::vector<std::pair<std::string, int>> ArquivoIndice::getChavesEIndices ()
 int ArquivoIndice::busca (const char *str)
 {
    //arvore vazia
-   if (this->posRaiz == -1) return -1;
+   if (posRaiz == -1) return -1;
 
-   return this->buscaAux(this->posRaiz, str);
+   return buscaAux(posRaiz, str);
 }
 
 int ArquivoIndice::buscaAux (int pos, const char *str)
 {
-   BTreeNode atual = BTreeNode::getNode(this->in, pos);
+   BTreeNode atual = BTreeNode::getNode(in, pos);
 
    int i; //posicao do vetor-chave ou vetor-filhos que a chave esta
    for (i = 0; i < atual.numChaves && strcmp(str, atual.chaves[i]) > 0; ++i)
@@ -150,7 +150,7 @@ int ArquivoIndice::buscaAux (int pos, const char *str)
    
    //enquanto nao for folha, busca recursivamente
    if (!atual.isLeaf())
-      return this->buscaAux(atual.filhos[i], str);
+      return buscaAux(atual.filhos[i], str);
    
    //chave inexistente
    return -1;
@@ -158,17 +158,17 @@ int ArquivoIndice::buscaAux (int pos, const char *str)
 
 void ArquivoIndice::getChavesEIndicesAux (int pos, std::vector<std::pair<std::string, int>> &elems)
 {
-   BTreeNode atual = BTreeNode::getNode(this->in, pos);
+   BTreeNode atual = BTreeNode::getNode(in, pos);
 
    int i;
    for (i = 0; i < atual.numChaves; ++i)
    {
       if (!atual.isLeaf())
-         this->getChavesEIndicesAux(atual.filhos[i], elems);
+         getChavesEIndicesAux(atual.filhos[i], elems);
       
       std::string chave = atual.chaves[i];
       elems.push_back(std::make_pair(chave, atual.indices[i]));
    }
    if (!atual.isLeaf())
-      this->getChavesEIndicesAux(atual.filhos[i], elems);
+      getChavesEIndicesAux(atual.filhos[i], elems);
 }

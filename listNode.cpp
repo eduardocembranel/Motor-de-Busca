@@ -11,7 +11,7 @@ ListNode::ListNode(int arq, int qnt, int prox)
 
 int ListNode::getProx () const
 {
-   return this->prox;
+   return prox;
 }
 
 std::ostream& operator<< (std::ostream &out, const ListNode &node)

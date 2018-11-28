@@ -19,11 +19,11 @@ class BTreeNode
    public:
       BTreeNode ();
       BTreeNode (const char *, int);
-      bool isLeaf();
-      bool underflow();
-      bool overflow();
-      static BTreeNode getNode (std::ifstream &, int);
       void setNode (std::ofstream &, int);
+      bool isLeaf() const;
+      bool underflow() const;
+      bool overflow() const;
+      static BTreeNode getNode (std::ifstream &, int);
       static BTreeNode split (BTreeNode &, char *, int *);
 
 };

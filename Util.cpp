@@ -42,11 +42,21 @@ std::vector<int> Util::intersecao (std::vector<std::vector<int>> &vecs)
       std::sort(vecs[i].begin(), vecs[i].end());
 
       r.clear();
-      std::set_intersection(aux.begin(), aux.end(), vecs[i].begin(), vecs[i].end(),
-         std::back_inserter(r));
+      std::set_intersection(aux.begin(), aux.end(), vecs[i].begin(), 
+         vecs[i].end(), std::back_inserter(r));
    }
 
    return r;
+}
+
+bool Util::isBlank (const std::string &str)
+{
+   if (str.length() == 0) return true;
+
+   for (size_t i = 0; i < str.length(); ++i)
+      if (str[i] != ' ') return false;
+
+   return true;
 }
 
 /* brief: limpa a tela do console

@@ -64,24 +64,23 @@ void Buscador::imprimeIndice ()
    std::vector<std::pair<std::string, int>> elems = arqIndice->getChavesEIndices();
    std::ifstream file(arqDados->getName(), std::ios::in);
 
-      size_t i;
-      for (i = 0; i < elems.size(); ++i)
+   for (size_t i = 0; i < elems.size(); ++i)
+   {
+      //imprime a chave junto com uma serie de espacos em branco
+      std::cout << elems[i].first;
+      for (int j = 0; j < 30 - elems[i].first.length(); ++j) { std::cout << " "; }
+
+      ListNode temp;
+      int pos = elems[i].second;
+
+      //imprime arquivos e quantidade
+      for (pos = elems[i].second; pos != -1; pos = temp.getProx())
       {
-         //imprime a chave junto com uma serie de espacos em branco
-         std::cout << elems[i].first;
-         for (int j = 0; j < 30 - elems[i].first.length(); ++j) { std::cout << " "; }
-
-         ListNode temp;
-         int pos = elems[i].second;
-
-         //imprime arquivos e quantidade
-         for (pos = elems[i].second; pos != -1; pos = temp.getProx())
-         {
-            temp = arqDados->getData(pos);
-            std::cout << temp;
-         }
-         std::cout << "\n";
+         temp = arqDados->getData(pos);
+         std::cout << temp;
       }
+      std::cout << "\n";
+   }
       
    Util::pressRetornar();
    file.close();
@@ -92,6 +91,7 @@ void Buscador::consulta ()
    Util::clear();
    std::cout << "[Consultar]\n\n"
              << "Insira as palavras a serem consultadas: ";
+
    std::string entrada;
    std::getline(std::cin, entrada);
 
@@ -101,8 +101,8 @@ void Buscador::consulta ()
    std::vector<std::vector<int>> arquivos;
    for (auto &it : palavras)
    {
-      int pos = this->arqIndice->busca(it.c_str());
-      arquivos.push_back(this->arqDados->getTodosArquivos(pos));
+      int pos = arqIndice->busca(it.c_str());
+      arquivos.push_back(arqDados->getTodosArquivos(pos));
    }
 
    std::vector<int> intersec = Util::intersecao(arquivos);
@@ -110,7 +110,7 @@ void Buscador::consulta ()
    std::cout << "\nqnt: " << intersec.size() << "\ndocumentos:\n";
 
    for (auto &it : intersec)
-      std::cout << this->caminhoArquivos[it] << "\n";
+      std::cout << caminhoArquivos[it] << "\n";
 
    Util::pressRetornar();
 }
@@ -155,7 +155,7 @@ void Buscador::carregaStopWords (const std::string &fileName)
 
    std::string stopWord;
    while (std::getline(fBuffer, stopWord))
-      if (stopWord != "\n")
+      if (!Util::isBlank(stopWord))
          stopWords.insert(stopWord);
 
    fBuffer.close();
@@ -179,9 +179,8 @@ void Buscador::carregaDados ()
          for (auto it : palavras)
          {
             if (it.length() == 1)
-            {
                stopWords.insert(it);
-            }
+            
             if (!ehStopWord(it) && it.length() != 0)
             {
                int posDados;

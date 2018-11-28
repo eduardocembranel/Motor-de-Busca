@@ -4,11 +4,11 @@
 
 BTreeNode::BTreeNode (const char *chave, int indice)
 {
-   this->numChaves  = 1;
-   strcpy(this->chaves[0], chave);
-   this->indices[0] = indice;
+   numChaves  = 1;
+   strcpy(chaves[0], chave);
+   indices[0] = indice;
    for (int i = 0; i < ORDEM + 1; ++i)
-      this->filhos[i] = -1;
+      filhos[i] = -1;
 }
 
 /* brief: construtor da clase, inicializa com os valores padroes
@@ -18,35 +18,35 @@ BTreeNode::BTreeNode (const char *chave, int indice)
 BTreeNode::BTreeNode ()
 {
    for (int i = 0; i < ORDEM + 1; ++i)
-      this->filhos[i] = -1;
-   this->numChaves = 0;
+      filhos[i] = -1;
+   numChaves = 0;
 }
 
 /* brief: Faz a verificação de excesso de chaves no nó
 * pre: nenhuma
 * pos: passar se há ou não excesso de chaves
 */
-bool BTreeNode::overflow ()
+bool BTreeNode::overflow () const
 {
-   return (this->numChaves == ORDEM);
+   return (numChaves == ORDEM);
 }
 
 /* brief: Faz a verificação se ha menos chaves que o minimo no nó
 * pre: nenhuma
 * pos: passar se há ou não menos chaves que o minimo
 */
-bool BTreeNode::underflow ()
+bool BTreeNode::underflow () const
 {
-   return (this->numChaves < MINIMO);
+   return (numChaves < MINIMO);
 }
 
 /* brief: Verifica se o nó é uma folha 
 * pre: nenhuma
 * pos: passar para a chamada se é ou não uma folha
 */
-bool BTreeNode::isLeaf ()
+bool BTreeNode::isLeaf () const
 {
-   return (this->filhos[0] == -1);
+   return (filhos[0] == -1);
 }
 
 /* brief: Get da posição do nó 

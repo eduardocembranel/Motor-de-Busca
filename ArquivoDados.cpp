@@ -2,23 +2,23 @@
 
 ArquivoDados::ArquivoDados (const std::string &fileName) : Arquivo(fileName)
 {
-   this->posTopo = 0;
+   posTopo = 0;
 }
 
 void ArquivoDados::insereNo (ListNode *elem, int pos)
 {
-   this->out.seekp(pos * sizeof(ListNode));
-   this->out.write((char*)elem, sizeof(ListNode));
-   this->out.flush();
+   out.seekp(pos * sizeof(ListNode));
+   out.write((char*)elem, sizeof(ListNode));
+   out.flush();
 }
 
 void ArquivoDados::insere (int arquivo, int pos)
 {
-   if (pos == this->posTopo)
+   if (pos == posTopo)
    {
       ListNode novo(arquivo);
-      this->insereNo(&novo, pos);
-      ++this->posTopo;
+      insereNo(&novo, pos);
+      ++posTopo;
    }
    else
    {
@@ -33,16 +33,16 @@ void ArquivoDados::insere (int arquivo, int pos)
       if (elem.arquivo == arquivo)
       {
          ++elem.quantidade;
-         this->insereNo(&elem, posAtual);
+         insereNo(&elem, posAtual);
       }
       else
       {
-         elem.prox = this->posTopo;
-         this->insereNo(&elem, posAtual);
+         elem.prox = posTopo;
+         insereNo(&elem, posAtual);
 
          ListNode novo(arquivo);
-         this->insereNo(&novo, this->posTopo);
-         ++this->posTopo;
+         insereNo(&novo, posTopo);
+         ++posTopo;
       }
    }   
 }
@@ -51,15 +51,15 @@ ListNode ArquivoDados::getData (int pos)
 {
    ListNode x;
    
-   this->in.seekg(pos * sizeof(ListNode));
-   this->in.read((char*)&x, sizeof(ListNode));
+   in.seekg(pos * sizeof(ListNode));
+   in.read((char*)&x, sizeof(ListNode));
 
    return x;
 }
 
 int ArquivoDados::getPosTopo () const
 {
-   return this->posTopo;
+   return posTopo;
 }
 
 std::vector<int> ArquivoDados::getTodosArquivos (int pos)
@@ -77,5 +77,5 @@ std::vector<int> ArquivoDados::getTodosArquivos (int pos)
 
 std::string ArquivoDados::getName () const
 {
-   return this->fileName;
+   return fileName;
 }
