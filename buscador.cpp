@@ -73,7 +73,7 @@ void Buscador::imprimeIndice ()
       ListNode temp;
       int pos = elems[i].second;
 
-      //imprime arquivos e quantidade
+      //imprime quais arquivos e quantidade
       for (pos = elems[i].second; pos != -1; pos = temp.getProx())
       {
          temp = arqDados->getData(pos);
@@ -179,11 +179,8 @@ void Buscador::carregaDados ()
    
          std::vector<std::string> palavras = Util::splitString(linha, delimitadores);
          for (auto it : palavras)
-         {
-            if (it.length() == 1)
-               stopWords.insert(it);
-            
-            if (!ehStopWord(it) && it.length() != 0)
+         {            
+            if (!ehStopWord(it) && it.length() > 1)
             {
                int posDados;
                

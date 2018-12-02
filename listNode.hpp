@@ -9,9 +9,9 @@ class ListNode
    friend class ArquivoDados;
 
    private:
-      int arquivo;
-      int quantidade;
-      int prox;
+      int arquivo; //indice de arquivo
+      int quantidade; //quantidade de aparicoes da palavra no arquivo
+      int prox; //indice da proxima celula da lista
 
    public:
       ListNode();

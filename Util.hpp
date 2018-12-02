@@ -1,8 +1,8 @@
 #ifndef UTIL_HPP
 #define UTIL_HPP
 
-#include <string>
 #include <vector>
+#include <string>
 
 class Util
 {

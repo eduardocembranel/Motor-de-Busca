@@ -14,6 +14,14 @@
 
 class Arquivo
 {
+   public:
+      /* brief: metodo getter: obtem o nome do arquivo
+      * return: string contendo o nome do arquivo
+      * pre: nenhuma
+      * pos: nome obtido
+      */
+      std::string getName () const;
+
    protected:
       std::string fileName; //nome do arquivo
       std::ifstream in; //buffer para leitura
@@ -30,6 +38,9 @@ class Arquivo
       * pos: arquivos de leitura e escrita fechados 
       */
       ~Arquivo ();   
+
+      
+      
 };
 
 #endif // !ARQUIVO_HPP

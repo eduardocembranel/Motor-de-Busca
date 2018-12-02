@@ -2,7 +2,7 @@
 #define ARQUIVODADOS_HPP
 
 #include <vector>
-#include <cstring>
+#include <string>
 
 #include "Arquivo.hpp"
 #include "BTreeNode.hpp"
@@ -17,10 +17,9 @@ class ArquivoDados : public Arquivo
       ArquivoDados (const std::string &);
       void insere (int, int);
       void insereNo (ListNode *, int);
-      std::vector<int> getTodosArquivos (int);
-      ListNode getData (int);
       int getPosTopo () const;
-      std::string getName () const;
+      ListNode getData (int);
+      std::vector<int> getTodosArquivos (int);
 };
 
 #endif // !ARQUIVODADOS_HPP

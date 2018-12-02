@@ -1,5 +1,5 @@
-#include <algorithm>
 #include <iostream>
+#include <algorithm>
 #include <cstdlib>
 
 #include "Util.hpp"
@@ -49,16 +49,6 @@ std::vector<int> Util::intersecao (std::vector<std::vector<int>> &vecs)
    return r;
 }
 
-bool Util::isBlank (const std::string &str)
-{
-   if (str.length() == 0) return true;
-
-   for (size_t i = 0; i < str.length(); ++i)
-      if (str[i] != ' ') return false;
-
-   return true;
-}
-
 void Util::removePontuacao (std::string &str)
 {
    for (size_t i = 0; i < str.size(); ++i)
@@ -71,13 +61,14 @@ void Util::removePontuacao (std::string &str)
    }
 }
 
-/* brief: limpa a tela do console
-* pre: nenhuma
-* pos: tela limpada do console
-*/
-void Util::clear ()
+bool Util::isBlank (const std::string &str)
 {
-   system("cls");
+   if (str.length() == 0) return true;
+
+   for (size_t i = 0; i < str.length(); ++i)
+      if (str[i] != ' ') return false;
+
+   return true;
 }
 
 /* brief: exibe a mensagem esperando por um ENTER e aguarda o mesmo
@@ -98,4 +89,13 @@ void Util::flushInput ()
 {
    std::cin.clear();
    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+/* brief: limpa a tela do console
+* pre: nenhuma
+* pos: tela limpada do console
+*/
+void Util::clear ()
+{
+   system("cls");
 }

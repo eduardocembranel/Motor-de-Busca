@@ -20,3 +20,13 @@ Arquivo::~Arquivo ()
    out.close();
    in.close();
 }
+
+/* brief: metodo getter: obtem o nome do arquivo
+* return: string contendo o nome do arquivo
+* pre: nenhuma
+* pos: nome obtido
+*/
+std::string Arquivo::getName () const
+{
+   return fileName;
+}
