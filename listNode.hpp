@@ -6,7 +6,7 @@
 
 class ListNode
 {
-   friend class ArquivoDados;
+   friend class ArquivoInvertido;
 
    private:
       int arquivo; //indice de arquivo

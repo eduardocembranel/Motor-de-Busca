@@ -8,8 +8,8 @@ Buscador::Buscador (const std::string &fileCaminhos, const char *fileStopWords)
 {
    carregaCaminhos(fileCaminhos);
    carregaStopWords(fileStopWords);
-   arqIndice = new ArquivoIndice("invertido.bin");
-   arqDados  = new ArquivoDados("dados.bin");
+   arqIndice     = new ArquivoIndice("invertido.bin");
+   arqInvertido  = new ArquivoInvertido("dados.bin");
 
    carregaDados();
 }
@@ -62,7 +62,7 @@ void Buscador::imprimeIndice ()
    std::cout << "[Imprimir Indice]\n\n";
 
    std::vector<std::pair<std::string, int>> elems = arqIndice->getChavesEIndices();
-   std::ifstream file(arqDados->getName(), std::ios::in);
+   std::ifstream file(arqInvertido->getName(), std::ios::in);
 
    for (size_t i = 0; i < elems.size(); ++i)
    {
@@ -76,7 +76,7 @@ void Buscador::imprimeIndice ()
       //imprime quais arquivos e quantidade
       for (pos = elems[i].second; pos != -1; pos = temp.getProx())
       {
-         temp = arqDados->getData(pos);
+         temp = arqInvertido->getData(pos);
          std::cout << temp;
       }
       std::cout << "\n";
@@ -102,7 +102,7 @@ void Buscador::consulta ()
    for (auto &it : palavras)
    {
       int pos = arqIndice->busca(it.c_str());
-      arquivos.push_back(arqDados->getTodosArquivos(pos));
+      arquivos.push_back(arqInvertido->getTodosArquivos(pos));
    }
 
    std::vector<int> intersec = Util::intersecao(arquivos);
@@ -184,8 +184,8 @@ void Buscador::carregaDados ()
             {
                int posDados;
                
-               arqIndice->insere(it.c_str(), arqDados->getPosTopo(), posDados);
-               arqDados->insere(i, posDados);
+               arqIndice->insere(it.c_str(), arqInvertido->getPosTopo(), posDados);
+               arqInvertido->insere(i, posDados);
             }
          }
          //fim de arquivo
@@ -202,6 +202,6 @@ bool Buscador::ehStopWord (const std::string &str) const
 
 Buscador::~Buscador ()
 {
-   delete arqDados;
+   delete arqInvertido;
    delete arqIndice;
 }

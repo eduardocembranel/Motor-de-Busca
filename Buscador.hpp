@@ -6,7 +6,7 @@
 #include <string>
 
 #include "ArquivoIndice.hpp"
-#include "ArquivoDados.hpp"
+#include "ArquivoInvertido.hpp"
 
 class Buscador
 {
@@ -19,7 +19,7 @@ class Buscador
       std::set<std::string>     stopWords;
       std::vector<std::string>  caminhoArquivos;
       ArquivoIndice             *arqIndice;
-      ArquivoDados              *arqDados;
+      ArquivoInvertido          *arqInvertido;
 
       void carregaCaminhos(const std::string &);
       void carregaStopWords(const std::string &);
